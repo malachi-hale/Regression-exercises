@@ -46,7 +46,7 @@ def get_zillow_data():
         return df
 
 #Now we will replace the null values with the mean value of each column
-def impute_null_values():
+def impute_null_values(df):
     '''
     We will use SimpleImputer to impute the mean value into the null values into each column.
     '''
@@ -56,4 +56,43 @@ def impute_null_values():
     #We will create a for loop that will impute all the null values in each one of our columns.
     for col in df.columns:
         df[[col]] = imputer.fit_transform(df[[col]])
+    
     return df
+
+#This function removes extreme outliers from our DataFrame
+def remove_outliers(df, k, col_list):
+    ''' remove outliers from a list of columns in a dataframe 
+        and return that dataframe
+    '''
+    
+    for col in col_list:
+
+        q1, q3 = df[col].quantile([.25, .75])  # get quartiles
+        
+        iqr = q3 - q1   # calculate interquartile range
+        
+        upper_bound = q3 + k * iqr   # get upper bound
+        lower_bound = q1 - k * iqr   # get lower bound
+
+        # return dataframe without outliers
+        
+        df = df[(df[col] > lower_bound) & (df[col] < upper_bound)]
+        
+    return df
+
+def wrangle_zillow():
+    '''
+    We will call the other functions from the file in our wrangle_zillow function.
+    '''
+    #Acquire data
+    df = get_zillow_data()
+
+    #Clean data
+    df = impute_null_values(df)
+
+    #Remove outliers
+    df = remove_outliers(df, 3, df.columns)
+
+    #Return final DataFrame
+    return df
+
