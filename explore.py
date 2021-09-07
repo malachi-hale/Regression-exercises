@@ -101,8 +101,8 @@ def prep_telco(df):
     return train, validate, test
 
 def plot_variable_pairs(df):
-        plt.figure(figsize=(22, 12))
         g = sns.pairplot(df, kind="reg", corner=True, plot_kws={'line_kws':{'color':'red'}})
+        g.fig.set_size_inches(70,50)
         return g
     
 def months_to_years(df):
