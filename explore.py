@@ -101,6 +101,7 @@ def prep_telco(df):
     return train, validate, test
 
 def plot_variable_pairs(df):
+        plt.figure(figsize=(22, 12))
         g = sns.pairplot(df, kind="reg", corner=True, plot_kws={'line_kws':{'color':'red'}})
         return g
     
