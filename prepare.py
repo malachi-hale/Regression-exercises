@@ -30,24 +30,28 @@ def add_scaled_columns(train, validate, test):
     # new column names
     new_column_names = [c + '_scaled' for c in columns_to_scale]
     
+    #Define scaler
+    scaler_min_max = sklearn.preprocessing.MinMaxScaler()
+    
     # Fit the scaler on the train
-    scaler_standard.fit(train[columns_to_scale])
+    scaler_min_max.fit(train[columns_to_scale])
     
     # transform train validate and test
     train = pd.concat([
         train,
-        pd.DataFrame(scaler_standard.transform(train[columns_to_scale]), columns=new_column_names, index=train.index),
+        pd.DataFrame(scaler_min_max.transform(train[columns_to_scale]), columns=new_column_names, index=train.index),
     ], axis=1)
     
     validate = pd.concat([
         validate,
-        pd.DataFrame(scaler_standard.transform(validate[columns_to_scale]), columns=new_column_names, index=validate.index),
+        pd.DataFrame(scaler_min_max.transform(validate[columns_to_scale]), columns=new_column_names, index=validate.index),
     ], axis=1)
     
     
     test = pd.concat([
         test,
-        pd.DataFrame(scaler_standard.transform(test[columns_to_scale]), columns=new_column_names, index=test.index),
+        pd.DataFrame(scaler_min_max.transform(test[columns_to_scale]), columns=new_column_names, index=test.index),
     ], axis=1)
     
     return train, validate, test
+
