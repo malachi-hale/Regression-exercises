@@ -101,7 +101,8 @@ def prep_telco(df):
     return train, validate, test
 
 def plot_variable_pairs(df):
-        g = sns.pairplot(df, kind="reg", corner=True, plot_kws={'line_kws':{'color':'red'}})
+        sns.color_palette("bright")
+        g = sns.pairplot(df, kind="reg", corner = True, plot_kws={'line_kws':{'color':'red'}})
         return g
     
 def months_to_years(df):
@@ -109,6 +110,7 @@ def months_to_years(df):
     return df
 
 def plot_categorical_and_continuous_vars(train, categorical, continuous):
+    sns.color_palette("bright")
     for col1 in categorical:
         for col2 in continuous:
             plt.figure(figsize=(22, 12))
