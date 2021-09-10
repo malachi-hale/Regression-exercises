@@ -14,6 +14,8 @@ import seaborn as sns
 import env
 import os
 
+from sklearn.model_selection import train_test_split
+
 #Library needed for scaling the data
 import sklearn.preprocessing
 
